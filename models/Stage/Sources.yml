@@ -1,0 +1,26 @@
+version: 2
+
+sources:
+  - name: src
+    database: sourcedb
+    schema: mk_mall
+    tables:
+      - name: customers
+        columns:
+          - name: c_custkey
+            tests:
+              - unique
+              - not_null
+                 
+              
+      - name: nations
+      - name: regions
+      - name: suppliers
+        freshness: 
+          error_after:
+            count: 2
+            period: minute
+          warn_after:
+            count: 1
+            period: minute
+        loaded_at_field: updated_time
