@@ -6,6 +6,8 @@ select
 	c_address as address,
 	c_phone as phone_number,
 	c_acctbal as account_balance,
+    {{dol_euro('account_balance')}} as price_euros,
+    {{dol_inr('account_balance')}} as price_inr,
 	c_mktsegment as market_segment,
 	c_comment as comment
 	from {{ source ('src','customers') }}

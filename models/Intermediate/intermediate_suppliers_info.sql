@@ -1,4 +1,4 @@
-{{ config(materialized="incremental",unique='supplier_id') }}
+{{ config(materialized='incremental',unique='supplier_id',alias='int_suppliers') }}
 
 with supplier as (
     select

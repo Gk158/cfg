@@ -2,24 +2,32 @@ version: 2
 
 models:
   - name: stg_nations
+    description: Staging table for all nations
     columns:
-     - name: nation_id
-       tests:
-         - unique:
-            config:
-              store_failures: true
-         - not_null
-         
-         
-     - name: region_id
-    tests:
-    - relationships:
-        to: ref('stg_regions')
-        field: region_id
+      - name: nation_id
+        description: Nation id is primary key
+        tests:
+          - is_even
+          - unique:
+              config:
+                store_failures: true
+                schema: dbt_test_failures
+                store_failures_as: view
+          - not_null
+
+      - name: region_id
+        description: foreign key from region table
+        tests:
+          
+          - relationships:
+              to: ref('stg_regions')
+              field: region_id
 
   - name: stg_regions
     columns:
       - name: name
         tests:
-           - accepted_values:
-              values: ['AFRICA','AMERICA']
+          - accepted_values:
+              values: ['AFRICA', 'AMERICA','ASIA','EUROPE']
+          - dbt_utils.not_accepted_values:
+              values: ['newregion','oldregion']
